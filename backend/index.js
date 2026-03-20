@@ -4,12 +4,17 @@ import cookieParser from "cookie-parser";
 import { connectDB } from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js"
 import dotenv from "dotenv";
+import categoryRoutes from "./routes/categoryRoutes.js";
+import menuRoutes from "./routes/menuRoutes.js";
+
+import connectCloudinary from "./config/cloudinary.js";
 dotenv.config()
 
 const app=express();
 
 // database connection
 connectDB() 
+connectCloudinary();
 
 // middleware
 app.use(express.json()); 
@@ -23,6 +28,8 @@ app.get("/",(req , res)=>{
 });
 
 app.use("/api/auth",authRoutes)
+app.use("/api/category",categoryRoutes)
+app.use("/api/menu",menuRoutes)
 
 app.listen(PORT,()=>{
     console.log(`surver is running on port ${PORT}`)
